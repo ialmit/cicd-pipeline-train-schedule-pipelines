@@ -8,19 +8,17 @@ pipeline {
                 archiveArtifacts artifacts: 'dist/trainSchedule.zip'
             }
         }
-        stage('DeployToStaging') {
-            script {
-                if (env.BRANCH_NAME == 'master'){
-                    echo "inside the if"
-                    steps {
-                        echo 'DEPLOY TO STAGING'
-                    }
-                } else{
-                    steps {
-                        echo 'FAILED TO STAGING'
-                    }
-                }
+stage('myStage') {
+    steps {
+        echo 'within myStage'
+        script {
+            if (env.BRANCH_NAME == "master") {
+                echo 'triggered by myBranch'
+            } else {
+                echo 'triggered by something else'
             }
         }
+    }
+}
     }
 }
