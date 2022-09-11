@@ -3,13 +3,15 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'Rusnning build automation'
+                echo 'Running build automation'
                 sh './gradlew build --no-daemon'
                 archiveArtifacts artifacts: 'dist/trainSchedule.zip'
             }
         }
         stage('DeployToStaging') {
-            if (env.BRANCH_NAME == "master"){
+            when {
+                branch 'master'
+            }
             steps {
                 withCredentials([usernamePassword(credentialsId: 'webserver_login', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS')]) {
                     sshPublisher(
@@ -35,7 +37,7 @@ pipeline {
                     )
                 }
             }
-            }}
+        }
         stage('DeployToProduction') {
             when {
                 branch 'master'
