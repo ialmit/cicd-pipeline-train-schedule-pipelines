@@ -9,11 +9,13 @@ pipeline {
             }
         }
         stage('DeployToStaging') {
-            when {
-                branch 'master'
-            }
-            steps {
-                echo 'DEPLOY TO STAGING'
+            script {
+                if (env.BRANCH_NAME == 'master'){
+                    echo "inside the if"
+                    steps {
+                        echo 'DEPLOY TO STAGING'
+                    }
+                }
             }
         }
     }
