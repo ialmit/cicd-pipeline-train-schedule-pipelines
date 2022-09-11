@@ -15,6 +15,10 @@ pipeline {
                     steps {
                         echo 'DEPLOY TO STAGING'
                     }
+                } else{
+                    steps {
+                        echo 'FAILED TO STAGING'
+                    }
                 }
             }
         }
